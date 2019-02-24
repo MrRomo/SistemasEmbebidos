@@ -2,7 +2,10 @@
     "files.associations": {
         "stdlib.h": "c",
         "estructuradinamica.h": "c",
-        "stdio.h": "c"
+        "stdio.h": "c",
+        "cstdbool": "cpp",
+        "dinamicvector.h": "c",
+        "stdbool.h": "c"
     },
     "C_Cpp.errorSquiggles": "Enabled"
 }
