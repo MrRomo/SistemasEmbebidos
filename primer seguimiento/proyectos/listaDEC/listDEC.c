@@ -22,6 +22,7 @@ List *list_new()
 bool list_append(List *list, void *elemento)
 {
     Nodo *nuevo = malloc(sizeof(Nodo));
+    //printf("asignando %d - ",  *(int *)elemento);
     nuevo->dato = *(int *)elemento;
     nuevo->next = NULL;
     nuevo->prev = NULL;
@@ -32,7 +33,7 @@ bool list_append(List *list, void *elemento)
         list->tail = list->head;
         list->head->prev = list->tail;
         list->tam = 1;
-        list->pos = list->tail;
+        list->pos = nuevo;
     }
     else
     {
@@ -48,15 +49,15 @@ bool list_append(List *list, void *elemento)
 //devuelve el valor del elemento segun el indice
 void *list_get(List *list, size_t indice)
 {
-    if (indice < 0 || indice >= list->tam)
-        return NULL;
-    Nodo *tmpList;
-    tmpList = list->head;
-    for (char i = 0; i < indice; i++)
-    {
-        tmpList = tmpList->next;
-    }
-    return tmpList->dato;
+    // if (indice < 0 || indice >= list->tam)
+    //     return NULL;
+    // Nodo *tmpList;
+    // tmpList = list->head;
+    // for (char i = 0; i < indice; i++)
+    // {
+    //     tmpList = tmpList->next;
+    // }
+    // return tmpList->dato;
 }
 
 //recorre la lista de izquierda a derecha a travez de sus nodos

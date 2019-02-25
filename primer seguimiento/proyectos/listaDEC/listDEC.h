@@ -17,10 +17,10 @@ typedef struct nodo
 typedef struct list
 {
     size_t tam;
-    Nodo *head;
-    Nodo *tail;
-    Nodo *pos;
     size_t count;
+    Nodo *head;
+    Nodo *pos;
+    Nodo *tail;
 } List;
 
 //Construcctor de la lista

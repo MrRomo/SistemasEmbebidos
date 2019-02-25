@@ -7,7 +7,7 @@ void desition();
 void printDesition();
 void clrscr();
 void space(char pos);
-
+void printList(List *list);
 int main(int argc, char const *argv[])
 {
     List *lista1 = list_new();
@@ -15,7 +15,7 @@ int main(int argc, char const *argv[])
 
     for (size_t i = 0; i < 10; i++)
     {
-        list_append(lista1, &i);
+        list_append(lista1,&i);
     }
     while (1)
     {
@@ -63,31 +63,34 @@ void desition(int salir, List *list)
         }
         break;
     case 5:
-        printf("desea eliminar el nodo [%d,%d] - [Y/N]\n",(int)list->count, (int)list->pos->dato);
+        printf("desea eliminar el nodo [%d,%d] - [Y/N]\n", (int)list->count, (int)list->pos->dato);
         printList(list);
         fflush(stdin);
         scanf("%s", &move);
-        if (move =='Y')
+        if (move == 'Y')
         {
             list_remove(list->pos);
             printf("Nodo eliminado...\n");
-        }else 
+        }
+        else
         {
             printf("No se realizo ninguna accion...\n");
         }
-        
+
     default:
         break;
     }
 }
+
 void printList(List *list)
 {
     list_run(list);
-    space((int)list->count* 3);
+    space((int)list->count * 3);
     printf("^\n");
     space((int)list->count * 3);
     printf("[%d,%d]\n", (int)list->count, (int)list->pos->dato);
 }
+
 void imprimirMenu()
 {
     printf("**** Bienvenido al list maker ****\n ¿que desea hacer?\n");
