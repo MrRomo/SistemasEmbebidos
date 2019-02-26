@@ -13,6 +13,7 @@ List *list_new()
     list->head = NULL;
     list->tail = NULL;
     list->tam = 0;
+    list->posMarker = 0;
     return list;
 }
 
@@ -21,6 +22,8 @@ List *list_new()
 bool list_append(List *list, void *elemento)
 {
     Nodo *nuevo = malloc(sizeof(Nodo));
+    if (!nuevo)return false;
+    
     nuevo->dato = *(int *)elemento;
     nuevo->next = NULL;
     nuevo->prev = NULL;
@@ -31,6 +34,7 @@ bool list_append(List *list, void *elemento)
         list->tail = list->head;
         list->head->prev = list->tail;
         list->tam = 1;
+        list->pos = list->head;
     }
     else
     {
@@ -41,6 +45,7 @@ bool list_append(List *list, void *elemento)
         list->head->prev = list->tail;
         list->tam += 1;
     }
+    return true;
 }
 
 //devuelve el valor del elemento segun el indice
@@ -58,15 +63,17 @@ void *list_get(List *list, size_t indice)
 }
 
 //recorre la lista de izquierda a derecha a travez de sus nodos
-Nodo* list_move_node(Nodo* nodo, char move){
+Nodo *list_move_node(Nodo *nodo, char move)
+{
     switch (move)
     {
-        case 'a':
-            return nodo->prev;
-        case 'd':
-            return nodo->next;
-        default:
-            break;
+    case 'a':
+
+        return nodo->prev;
+    case 'd':
+        return nodo->next;
+    default:
+        break;
     }
 }
 

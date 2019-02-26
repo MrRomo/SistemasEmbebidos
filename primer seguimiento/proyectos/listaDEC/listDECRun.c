@@ -7,19 +7,17 @@ void desition();
 void printDesition();
 void clrscr();
 void space (char pos);
-int posMarker = 0;
-Nodo *pos = NULL;
 
 int main(int argc, char const *argv[])
 {
     List *lista1 = list_new();
+    printf("entrando a append");
     int salir = 0;
-
+    bool append = list_append(lista1,&salir);
     for (size_t i = 0; i < 10; i++)
     {
-        list_append(lista1, &i);
+        append = list_append(lista1, &i);
     }
-    pos = lista1->head;
     while (1)
     {
         imprimirMenu();
@@ -52,9 +50,7 @@ void desition(int salir, List *list)
         break;
     case 4:
         printf("Hacia donde se desea mover a(derecha) o b(izquierda)\n");
-        pos = list_move_node(pos, 'd');
-        posMarker++;
-        if(posMarker>=list_length(list)) posMarker=0;
+        list_move_node(list->pos, 'd');
         printList(list);
         break;
     default:
@@ -63,10 +59,10 @@ void desition(int salir, List *list)
 }
 void printList(List * list){
     list_run(list);
-    space(posMarker*3);
+    space((int)list->posMarker*3);
     printf("^\n");
-    space(posMarker*3);
-    printf("[%d,%d]\n", posMarker, (int)pos->dato);
+    space((int)list->posMarker*3);
+    printf("[%d,%d]\n", (int)list->posMarker, (int)list->pos->dato);
 }
 void imprimirMenu()
 {
