@@ -10,17 +10,14 @@ struct nodo;
 typedef struct nodo
 {
     int dato;
-    struct nodo *next;
-    struct nodo *prev;
+    struct nodo *next, *prev;
 } Nodo;
 
 typedef struct list
 {
-    size_t tam;
-    size_t posMarker;
-    Nodo *head;
-    Nodo *pos;
-    Nodo *tail;
+    size_t tam, posMarker;
+    struct nodo *head, *pos, *tail;
+    
 } List;
 
 //Construcctor de la lista

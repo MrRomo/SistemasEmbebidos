@@ -6,12 +6,12 @@
 List *list_new()
 {
     //creamos la estructura y pedimos memoria para la estructura
-    List *list = malloc(sizeof(list));
+    List *list = (List *)malloc(sizeof(list));
     if (list == NULL)
         return NULL;
     //seteamos la cabeza y la cola
     list->head = NULL;
-    list->tail = NULL;
+    list->tail = (Nodo *)malloc(sizeof(Nodo));;
     list->tam = 0;
     list->posMarker = 0;
     return list;
@@ -21,20 +21,21 @@ List *list_new()
 //devuelve un bool si hubo un error o no
 bool list_append(List *list, void *elemento)
 {
-    Nodo *nuevo = malloc(sizeof(Nodo));
-    if (!nuevo)return false;
-    
+    Nodo *nuevo = (Nodo *)malloc(sizeof(Nodo));
+    if (!nuevo)
+        return false;
     nuevo->dato = *(int *)elemento;
-    nuevo->next = NULL;
-    nuevo->prev = NULL;
+    printf("value[%d]", (int)nuevo->dato);
     if (list->head == NULL)
     {
-        list->head = nuevo;
-        list->head->next = list->head;
-        list->tail = list->head;
-        list->head->prev = list->tail;
+        list->head=nuevo;
+        list->tail=nuevo;
+        nuevo->next=list->head;
+        nuevo->prev= list->tail;
+        printf("-[%d]", (int)list->head->dato);
+        printf("-[%d]", (int)nuevo->dato);
         list->tam = 1;
-        list->pos = list->head;
+        list_run(list);
     }
     else
     {
