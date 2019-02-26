@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
-#include "listSE.c"
+#include "listDEC.c"
 void imprimirMenu();
 void desition();
 void printDesition();
