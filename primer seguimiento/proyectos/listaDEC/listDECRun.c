@@ -35,11 +35,9 @@ void desition(int salir, List *list)
     switch (salir)
     {
     case 1:
-        clrscr();
         printList(list);
         break;
     case 2:
-        clrscr();
         printf("Ingrese el nuevo valor...");
         fflush(stdin);
         scanf("%d", &tmpNum);
@@ -47,7 +45,6 @@ void desition(int salir, List *list)
         printList(list);
         break;
     case 3:
-        clrscr();
         printf("Saliendo de invitado list maker...");
         break;
     case 4:
