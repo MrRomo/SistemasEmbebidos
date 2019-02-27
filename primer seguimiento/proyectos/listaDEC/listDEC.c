@@ -48,6 +48,41 @@ bool list_append(List *list, void *elemento)
     return true;
 }
 
+//inserta un dato detras del nodo que apunta pos
+void list_insert(List *list, void *value)
+{
+
+    Nodo *nuevo = (Nodo *)malloc(sizeof(Nodo));
+    if (!nuevo)
+        return false;
+    nuevo->dato = *(size_t *)value;
+
+    if ((list->posMarker) == 0)
+    {
+        Nodo *head = list->head;
+        list->head = nuevo;
+        head->prev = list->head;
+        list->head->prev = list->tail;
+        list->tail->next = list->head;
+        list->head->next = head;
+    }
+    else
+    {
+        Nodo *tempNodo = list->pos;
+        Nodo *tempNodoPrev = tempNodo->prev;
+        printf("TempNodo: [%d][%d][%d]\n", tempNodo->prev->dato, tempNodo->dato, tempNodo->next->dato);
+        list->pos = nuevo;
+        nuevo->next = tempNodo;
+        tempNodo->prev = nuevo;
+        nuevo->prev = tempNodoPrev;
+        tempNodoPrev->next = nuevo;
+    }
+    list->pos = list->head;
+    printf("Pos: [%d][%d][%d]\n", list->pos->prev->dato, list->pos->dato, list->pos->next->dato);
+    list->tam++;
+    list->posMarker = 0;
+}
+
 //devuelve el valor del elemento segun el indice
 void *list_get(List *list, size_t indice)
 {
@@ -111,9 +146,6 @@ size_t list_length(List *list)
 //elimina el nodo que apunta pos
 void list_remove(List *list)
 {
-
-    printf("Posmarker %d\n", list->posMarker);
-
     if ((list->posMarker) == 0)
     {
         Nodo *head = list->head;

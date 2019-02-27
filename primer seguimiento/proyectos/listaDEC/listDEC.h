@@ -17,7 +17,7 @@ typedef struct list
 {
     int tam, posMarker;
     struct nodo *head, *pos, *tail;
-    
+
 } List;
 
 //Construcctor de la lista
@@ -27,6 +27,9 @@ List *list_new();
 //devuelve un bool si hubo un error o no
 bool list_append(List *list, void *elemento);
 
+//inserta un dato detras del nodo que apunta pos
+void list_insert(List *list, void *value);
+
 //devuelve el valor del elemento segun el indice
 void *list_get(List *list, size_t indice);
 
@@ -34,7 +37,7 @@ void *list_get(List *list, size_t indice);
 void list_edit_node(List *list, void *value);
 
 //recorre la lista de izquierda a derecha a travez de sus nodos
-void *list_move_node(List * list, char move);
+void *list_move_node(List *list, char move);
 
 //Recorre e imprime toda la lista
 void list_run(List *list);
@@ -44,7 +47,6 @@ size_t list_length(List *list);
 
 //elimina el nodo que apunta pos
 void list_remove(List *list);
-
 
 //destruye el list de la memoria
 void list_destroy(List *list);

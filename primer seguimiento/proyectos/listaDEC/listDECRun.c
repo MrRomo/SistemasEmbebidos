@@ -14,7 +14,7 @@ int main(int argc, char const *argv[])
     int salir = 0;
     for (size_t i = 0; i < 10; i++)
     {
-        list_append(lista1, &i);
+        if(i!=3)list_append(lista1, &i);
     }
     printList(lista1);
     while (1)
@@ -78,18 +78,29 @@ void desition(int salir, List *list)
             printList(list);
             printf("No se realizo ninguna accion...\n");
         }
+        break;
+    case 6: 
+        printList(list);
+        printf("ingrese el valor del nuevo nodo detras de [%d,%d] - [Y/N]\n", (int)list->posMarker, (int)list->pos->dato);
+        fflush(stdin);
+        scanf("%d", &tmpNum);
+        list_insert(list,&tmpNum);
+        printList(list);
+        printf("Nodo insertado...\n");
+        break;
     default:
         break;
     }
 }
 void printList(List *list)
 {
-    system("@cls||clear");
+    // system("@cls||clear");
     list_run(list);
     space((int)list->posMarker * 3);
     printf("^\n");
-    space((int)list->posMarker * 3);
-    printf("[%d,%d]\n", (int)list->posMarker, (int)list->pos->dato);
+    // space((int)list->posMarker * 3);
+    printf("[pos|dato][%d,%d]\n", (int)list->posMarker, (int)list->pos->dato);
+    printf("[h|p|t][%d,%d,%d]\n", (int)list->head->dato, (int)list->pos->dato,(int)list->tail->dato);
 }
 
 void imprimirMenu()
@@ -100,6 +111,8 @@ void imprimirMenu()
     printf("3 - Editar posicion\n");
     printf("4 - Mover posicion\n");
     printf("5 - Eliminar posicion\n");
+    printf("6 - Insertar nodo en posicion\n");
+
 }
 void printDesition()
 {
