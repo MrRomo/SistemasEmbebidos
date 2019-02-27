@@ -1,13 +1,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
-#include "dinamicVector.h"
+#include "dinamicVector.h" 
 
-vector_t *vector_new(size_t tam_inicial)
+Vector_d *vector_new(size_t tam_inicial)
 {
 
     //creamos la estructura y pedimos memoria para la estructura
-    vector_t *vector = malloc(sizeof(vector_t));
+    Vector_d *vector = malloc(sizeof(Vector_d)); 
     if (vector == NULL)
         return NULL;
     //seteamos el tamaño inicial del vector
@@ -28,7 +28,7 @@ vector_t *vector_new(size_t tam_inicial)
     return vector;
 }
 //inserta un elemento en la posicion especifica
-bool vector_insert(vector_t *vector, size_t indice, void *elemento)
+bool vector_insert(Vector_d *vector, size_t indice, void *elemento)
 { //valida el indice de inssersion
     if (indice < 0 || indice >= vector->tam)
         return false;
@@ -36,7 +36,7 @@ bool vector_insert(vector_t *vector, size_t indice, void *elemento)
     vector->dato[indice] = elemento;
 }
 //devuelve el valor del elemento segun el indice
-void *vector_get(vector_t *vector, size_t indice)
+void *vector_get(Vector_d *vector, size_t indice)
 {
     if (indice < 0 || indice >= vector->tam)
         return NULL;
@@ -44,13 +44,13 @@ void *vector_get(vector_t *vector, size_t indice)
 }
 
 //obtiene el tamaño del vector
-size_t vector_length(vector_t *vector)
+size_t vector_length(Vector_d *vector)
 {
     return vector->tam;
 }
 
 //redimensiona el vector a un nuevo tamaño mas grande
-bool vector_resize(vector_t *vector, size_t tam)
+bool vector_resize(Vector_d *vector, size_t tam)
 { //valida un tamaño mayor al actual
     if (tam < vector->tam)
         return false;
@@ -67,7 +67,7 @@ bool vector_resize(vector_t *vector, size_t tam)
 }
 
 //destruye el vector de la memoria
-void vector_destroy(vector_t *vector)
+void vector_destroy(Vector_d *vector)
 {
     free(vector->dato);
     free(vector);

@@ -20,12 +20,19 @@ List *list_new()
 
 //inserta un elemento en la posicion especifica
 //devuelve un bool si hubo un error o no
-bool list_append(List *list, void *elemento)
+bool list_append(List *list, void *key, void *value)
 {
     Nodo *nuevo = (Nodo *)malloc(sizeof(Nodo));
     if (!nuevo)
         return false;
-    nuevo->dato = *(size_t *)elemento;
+    nuevo->dato = vector_new(2);
+    if (nuevo->dato == NULL)
+    {
+        free(nuevo);
+        return false;
+    }
+    vector_insert(nuevo->dato,0,key);
+    vector_insert(nuevo->dato,1,value);
     if (list->head == NULL)
     {
         list->head = nuevo;
@@ -45,17 +52,25 @@ bool list_append(List *list, void *elemento)
         list->head->prev = list->tail;
         list->tam += 1;
     }
+    
     return true;
 }
 
 //inserta un dato detras del nodo que apunta pos
-void list_insert(List *list, void *value)
+bool list_insert(List *list, void *key, void *value)
 {
-
+ 
     Nodo *nuevo = (Nodo *)malloc(sizeof(Nodo));
     if (!nuevo)
         return false;
-    nuevo->dato = *(size_t *)value;
+    nuevo->dato = vector_new(2);
+    if (nuevo->dato == NULL)
+    {
+        free(nuevo);
+        return false;
+    }
+    vector_insert(nuevo->dato, 0, &key);
+    vector_insert(nuevo->dato, 1, &value);
 
     if ((list->posMarker) == 0)
     {
@@ -70,7 +85,6 @@ void list_insert(List *list, void *value)
     {
         Nodo *tempNodo = list->pos;
         Nodo *tempNodoPrev = tempNodo->prev;
-        printf("TempNodo: [%d][%d][%d]\n", tempNodo->prev->dato, tempNodo->dato, tempNodo->next->dato);
         list->pos = nuevo;
         nuevo->next = tempNodo;
         tempNodo->prev = nuevo;
@@ -78,7 +92,6 @@ void list_insert(List *list, void *value)
         tempNodoPrev->next = nuevo;
     }
     list->pos = list->head;
-    printf("Pos: [%d][%d][%d]\n", list->pos->prev->dato, list->pos->dato, list->pos->next->dato);
     list->tam++;
     list->posMarker = 0;
 }
@@ -97,9 +110,10 @@ void *list_get(List *list, size_t indice)
     // return tmpList->dato;
 }
 //devuelve el valor del elemento segun el indice
-void list_edit_node(List *list, void *value)
+void list_edit_node(List *list, void *key,void *value)
 {
-    list->pos->dato = *(size_t *)value;
+    vector_insert( list->pos->dato, 0, key);
+    vector_insert( list->pos->dato, 1, value);
 }
 //recorre la lista de izquierda a derecha a travez de sus nodos
 void *list_move_node(List *list, char move)
@@ -128,13 +142,11 @@ void list_run(List *list)
 {
     Nodo *nodo;
     nodo = list->head;
-    printf("[");
     for (int i = 0; i < (int)list->tam; i++)
     {
-        printf(" %d, ", (int)nodo->dato);
+        printf(" <-[\"%c\":%d]-> ", *(char*)nodo->dato->dato[0],*(char *)nodo->dato->dato[1]);
         nodo = nodo->next;
     }
-    printf("]\n");
 }
 
 //obtiene el tamaño del list

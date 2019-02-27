@@ -1,15 +1,16 @@
-#ifndef _DINAMICSTRUCTURE
-#define _DINAMICSTRUCTURE
+#ifndef _DINAMICSTRUCTURELIST
+#define _DINAMICSTRUCTURELIST
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
+#include "dinamicVector.c"
 //Firmas de funciones
 struct list;
 struct nodo;
 
 typedef struct nodo
 {
-    int dato;
+    Vector_d *  dato;
     struct nodo *next, *prev;
 } Nodo;
 
@@ -25,16 +26,16 @@ List *list_new();
 
 //inserta un elemento en la posicion especifica
 //devuelve un bool si hubo un error o no
-bool list_append(List *list, void *elemento);
+bool list_append(List *list, void *key, void *value);
 
 //inserta un dato detras del nodo que apunta pos
-void list_insert(List *list, void *value);
+bool list_insert(List *list,  void *key, void *value); 
 
 //devuelve el valor del elemento segun el indice
 void *list_get(List *list, size_t indice);
 
 //devuelve el valor del elemento segun el indice
-void list_edit_node(List *list, void *value);
+void list_edit_node(List *list,void *key, void *value);
 
 //recorre la lista de izquierda a derecha a travez de sus nodos
 void *list_move_node(List *list, char move);
