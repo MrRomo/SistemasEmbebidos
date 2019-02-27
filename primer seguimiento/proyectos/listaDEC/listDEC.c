@@ -52,7 +52,6 @@ bool list_append(List *list, void *key, void *value)
         list->head->prev = list->tail;
         list->tam += 1;
     }
-    
     return true;
 }
 
@@ -147,6 +146,7 @@ void list_run(List *list)
         printf(" <-[\"%c\":%d]-> ", *(char*)nodo->dato->dato[0],*(char *)nodo->dato->dato[1]);
         nodo = nodo->next;
     }
+    printf("\n");
 }
 
 //obtiene el tamaño del list

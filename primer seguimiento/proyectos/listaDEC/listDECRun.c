@@ -12,21 +12,20 @@ int main(int argc, char const *argv[])
 {
     List *lista1 = list_new();
     int salir = 0;
-    for (char i = 'A'; i < 'G'; i++)
+    char letras[5] = {'a','b','c','d','f'};
+    for (char i = 0; i < 5; i++)
     {
-        list_append(lista1, &i, &i);
-        printf("LIST [%d] head: [%c] pos: [%c] tail: [%c]\n", lista1->tam, *(char *)lista1->head->dato->dato[0], *(char *)lista1->pos->dato->dato[0], *(char *)lista1->tail->dato->dato[0]);
+        list_append(lista1, &letras[i], &letras[i]);
     }
-
     printList(lista1);
-    // while (1)
-    // {
-    //     imprimirMenu();
-    //     fflush(stdin);
-    //     scanf("%d", &salir);
-    //     desition(salir, lista1);
-    // }
-    // return 0;
+    while (1)
+    {
+        imprimirMenu();
+        fflush(stdin);
+        scanf("%d", &salir);
+        desition(salir, lista1);
+    }
+    return 0;
 }
 
 void desition(int salir, List *list)
@@ -96,13 +95,13 @@ void desition(int salir, List *list)
 }
 void printList(List *list)
 {
-    // system("@cls||clear");
+    system("@cls||clear");
     list_run(list);
     space((int)list->posMarker * 3);
     printf("^\n");
     // space((int)list->posMarker * 3);
-    // printf("[pos|dato][%d,%d]\n", (int)list->posMarker, (int)list->pos->dato);
-    // printf("[h|p|t][%d,%d,%d]\n", (int)list->head->dato, (int)list->pos->dato,(int)list->tail->dato);
+    printf("[pos|dato][%d,%c]\n", (int)list->posMarker, *(char*)list->pos->dato->dato[0]);
+    printf("[h|p|t][%c,%c,%c]\n", *(char*)list->head->dato->dato[0], *(char*)list->pos->dato->dato[0],*(char*)list->tail->dato->dato[0]);
 }
 
 void imprimirMenu()
