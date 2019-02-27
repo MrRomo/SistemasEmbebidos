@@ -15,7 +15,7 @@ typedef struct nodo
 
 typedef struct list
 {
-    size_t tam, posMarker;
+    int tam, posMarker;
     struct nodo *head, *pos, *tail;
     
 } List;
@@ -30,8 +30,11 @@ bool list_append(List *list, void *elemento);
 //devuelve el valor del elemento segun el indice
 void *list_get(List *list, size_t indice);
 
+//devuelve el valor del elemento segun el indice
+void list_edit_node(List *list, void *value);
+
 //recorre la lista de izquierda a derecha a travez de sus nodos
-Nodo *list_node(Nodo *nodo, char move);
+void *list_move_node(List * list, char move);
 
 //Recorre e imprime toda la lista
 void list_run(List *list);

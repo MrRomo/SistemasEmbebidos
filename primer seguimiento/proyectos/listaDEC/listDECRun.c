@@ -16,12 +16,12 @@ int main(int argc, char const *argv[])
     {
         list_append(lista1, &i);
     }
+    printList(lista1);
     while (1)
     {
         imprimirMenu();
         fflush(stdin);
         scanf("%d", &salir);
-        system("@cls||clear");
         desition(salir, lista1);
     }
     return 0;
@@ -30,6 +30,7 @@ int main(int argc, char const *argv[])
 void desition(int salir, List *list)
 {
     // printDesition();
+    size_t tmpNum;
     switch (salir)
     {
     case 1:
@@ -37,7 +38,6 @@ void desition(int salir, List *list)
         break;
     case 2:
         printf("Ingrese el nuevo valor...");
-        int tmpNum;
         fflush(stdin);
         scanf("%d", &tmpNum);
         bool append = list_append(list, &tmpNum);
@@ -47,9 +47,15 @@ void desition(int salir, List *list)
         printf("Saliendo de invitado list maker...");
         break;
     case 4:
-        printf("Hacia donde se desea mover a(derecha) o b(izquierda)\n");
-        list_move_node(list->pos, 'd');
-        printList(list);
+        do
+        {
+            printList(list);
+            printf("Hacia donde se desea mover a(derecha) o b(izquierda)\n");
+            fflush(stdin);
+            scanf("%s", &tmpNum);
+            list_move_node(list, tmpNum);
+        } while (tmpNum != 's');
+
         break;
     default:
         break;
@@ -57,6 +63,7 @@ void desition(int salir, List *list)
 }
 void printList(List *list)
 {
+    system("@cls||clear");
     list_run(list);
     space((int)list->posMarker * 3);
     printf("^\n");
@@ -80,7 +87,7 @@ void printDesition()
 }
 void space(char pos)
 {
-    for (char i = 0; i < pos; i++)
+    for (char i = 0; i < pos+4; i++)
     {
         printf(" ");
     }

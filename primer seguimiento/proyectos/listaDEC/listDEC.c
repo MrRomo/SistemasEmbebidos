@@ -11,7 +11,8 @@ List *list_new()
         return NULL;
     //seteamos la cabeza y la cola
     list->head = NULL;
-    list->tail = (Nodo *)malloc(sizeof(Nodo));;
+    list->tail = (Nodo *)malloc(sizeof(Nodo));
+    ;
     list->tam = 0;
     list->posMarker = 0;
     return list;
@@ -24,18 +25,15 @@ bool list_append(List *list, void *elemento)
     Nodo *nuevo = (Nodo *)malloc(sizeof(Nodo));
     if (!nuevo)
         return false;
-    nuevo->dato = *(int *)elemento;
-    printf("value[%d]", (int)nuevo->dato);
+    nuevo->dato = *(size_t *)elemento;
     if (list->head == NULL)
     {
-        list->head=nuevo;
-        list->tail=nuevo;
-        nuevo->next=list->head;
-        nuevo->prev= list->tail;
-        printf("-[%d]", (int)list->head->dato);
-        printf("-[%d]", (int)nuevo->dato);
+        list->head = nuevo;
+        list->tail = nuevo;
+        list->pos = nuevo;
+        nuevo->next = list->head;
+        nuevo->prev = list->tail;
         list->tam = 1;
-        list_run(list);
     }
     else
     {
@@ -62,17 +60,28 @@ void *list_get(List *list, size_t indice)
     }
     return tmpList->dato;
 }
-
+//devuelve el valor del elemento segun el indice
+void list_edit_node(List *list, void *value)
+{
+    list->pos->dato = *(size_t *)value;
+}
 //recorre la lista de izquierda a derecha a travez de sus nodos
-Nodo *list_move_node(Nodo *nodo, char move)
+void *list_move_node(List *list, char move)
 {
     switch (move)
     {
     case 'a':
-
-        return nodo->prev;
+        list->posMarker--;
+        if (list->posMarker < 0)
+            list->posMarker = list->tam - 1;
+        list->pos = list->pos->prev;
+        break;
     case 'd':
-        return nodo->next;
+        list->posMarker++;
+        if (list->posMarker >= list->tam)
+            list->posMarker = 0;
+        list->pos = list->pos->next;
+        break;
     default:
         break;
     }
