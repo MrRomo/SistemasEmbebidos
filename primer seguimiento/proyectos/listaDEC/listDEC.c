@@ -13,7 +13,7 @@ List *list_new()
     list->head = NULL;
     list->tail = (Nodo *)malloc(sizeof(Nodo));
     ;
-    list->tam = 0; 
+    list->tam = 0;
     list->posMarker = 0;
     return list;
 }
@@ -107,14 +107,40 @@ size_t list_length(List *list)
 {
     return list->tam;
 }
-//destruye el list de la memoria
-void list_remove(Nodo *nodo)
+
+//elimina el nodo que apunta pos
+void list_remove(List *list)
 {
-    Nodo *nextNode = nodo->next;
-    Nodo *prevNode = nodo->prev;
-    prevNode->next = nextNode;
-    nextNode->prev = prevNode;
-    free(nodo);
+
+    printf("Posmarker %d\n", list->posMarker);
+
+    if ((list->posMarker) == 0)
+    {
+        Nodo *head = list->head;
+        list->head = list->head->next;
+        list->head->prev = list->tail;
+        list->tail->next = list->head;
+        free(head);
+    }
+    else if (list->posMarker == (list->tam - 1))
+    {
+        Nodo *tail = list->tail;
+        list->tail = list->tail->prev;
+        list->tail->next = list->head;
+        list->head->prev = list->tail;
+        free(tail);
+    }
+    else
+    {
+        Nodo *nextNode = list->pos->next;
+        Nodo *prevNode = list->pos->prev;
+        prevNode->next = nextNode;
+        nextNode->prev = prevNode;
+        free(list->pos);
+    }
+    list->pos = list->head;
+    list->tam--;
+    list->posMarker = 0;
 }
 //destruye el list de la memoria
 void list_destroy(List *list)

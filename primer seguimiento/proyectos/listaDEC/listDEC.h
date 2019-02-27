@@ -42,6 +42,10 @@ void list_run(List *list);
 //obtiene el tamaño del list
 size_t list_length(List *list);
 
+//elimina el nodo que apunta pos
+void list_remove(List *list);
+
+
 //destruye el list de la memoria
 void list_destroy(List *list);
 

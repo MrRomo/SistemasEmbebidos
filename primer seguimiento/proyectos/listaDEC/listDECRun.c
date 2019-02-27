@@ -53,7 +53,7 @@ void desition(int salir, List *list)
         printList(list);
         break;
     case 4:
-        while(move != 's')
+        while (move != 's')
         {
             printf("Hacia donde se desea mover a(derecha) o b(izquierda)\n");
             scanf("%c", &move);
@@ -67,16 +67,17 @@ void desition(int salir, List *list)
         printf("desea eliminar el nodo [%d,%d] - [Y/N]\n", (int)list->posMarker, (int)list->pos->dato);
         fflush(stdin);
         scanf("%s", &move);
-        if (move == 'Y')
+        if (move == 'y')
         {
-            list_remove(list->pos);
+            list_remove(list);
+            printList(list);
             printf("Nodo eliminado...\n");
         }
         else
         {
+            printList(list);
             printf("No se realizo ninguna accion...\n");
         }
-
     default:
         break;
     }
