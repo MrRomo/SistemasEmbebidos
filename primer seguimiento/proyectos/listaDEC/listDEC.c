@@ -56,9 +56,12 @@ bool list_append(List *list, void *key, void *value)
 }
 
 //inserta un dato detras del nodo que apunta pos
-bool list_insert(List *list, void *key, void *value)
+bool list_insert(List *list, void *keyt, void *valuet)
 {
  
+    void* key = keyt;
+    void* value = valuet;
+
     Nodo *nuevo = (Nodo *)malloc(sizeof(Nodo));
     if (!nuevo)
         return false;

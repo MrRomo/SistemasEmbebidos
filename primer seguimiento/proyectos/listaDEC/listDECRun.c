@@ -12,8 +12,8 @@ int main(int argc, char const *argv[])
 {
     List *lista1 = list_new();
     int salir = 0;
-    char letras[5] = {'a','b','c','d','f'};
-    for (char i = 0; i < 5; i++)
+    char letras[6] = {'a', 'b', 'c', 'd', 'e', 'f'};
+    for (char i = 0; i < 6; i++)
     {
         list_append(lista1, &letras[i], &letras[i]);
     }
@@ -30,7 +30,7 @@ int main(int argc, char const *argv[])
 
 void desition(int salir, List *list)
 {
-    int tmpNum;
+    char data;
     char move = 0;
 
     switch (salir)
@@ -40,17 +40,16 @@ void desition(int salir, List *list)
         break;
     case 2:
         printf("Ingrese el nuevo valor...");
-        fflush(stdin);
-        scanf("%d", &tmpNum);
-        bool append = list_append(list, &tmpNum, &tmpNum);
+        scanf("%s",&data);
+        bool append = list_append(list, &data, &data);
         printList(list);
         break;
     case 3:
         printList(list);
-        printf("3 - Editar posicion [%d][%d]\nIngresa el nuevo valor del nodo: _", list->pos->dato, list->posMarker);
-        fflush(stdin);
-        scanf("%d", &tmpNum);
-        list_edit_node(list, &tmpNum, &tmpNum);
+        printf("3 - Editar posicion [%d][%c]\nIngresa el nuevo valor del nodo: _", list->posMarker, *(char *)list->pos->dato->dato[0]);
+        char letra;
+        letra = getchar();
+        list_edit_node(list, &letra, &letra);
         printList(list);
         break;
     case 4:
@@ -65,7 +64,7 @@ void desition(int salir, List *list)
         break;
     case 5:
         printList(list);
-        printf("desea eliminar el nodo [%d,%d] - [Y/N]\n", (int)list->posMarker, (int)list->pos->dato);
+        printf("desea eliminar el nodo [%d,%c] - [Y/N]\n", (int)list->posMarker, *(char *)list->pos->dato->dato[0]);
         fflush(stdin);
         scanf("%s", &move);
         if (move == 'y')
@@ -82,10 +81,10 @@ void desition(int salir, List *list)
         break;
     case 6:
         printList(list);
-        printf("ingrese el valor del nuevo nodo detras de [%d,%d] - [Y/N]\n", (int)list->posMarker, (int)list->pos->dato);
+        printf("ingrese el valor del nuevo nodo detras de [%d,%c] - [Y/N]\n", (int)list->posMarker, *(char *)list->pos->dato->dato[0]);
         fflush(stdin);
-        scanf("%d", &tmpNum);
-        list_insert(list, &tmpNum, &tmpNum);
+        scanf("%d", &data);
+        list_insert(list, &data, &data);
         printList(list);
         printf("Nodo insertado...\n");
         break;
@@ -100,8 +99,8 @@ void printList(List *list)
     space((int)list->posMarker * 3);
     printf("^\n");
     // space((int)list->posMarker * 3);
-    printf("[pos|dato][%d,%c]\n", (int)list->posMarker, *(char*)list->pos->dato->dato[0]);
-    printf("[h|p|t][%c,%c,%c]\n", *(char*)list->head->dato->dato[0], *(char*)list->pos->dato->dato[0],*(char*)list->tail->dato->dato[0]);
+    printf("[pos|dato][%d,%c]\n", (int)list->posMarker, *(char *)list->pos->dato->dato[0]);
+    printf("[h|p|t][%c,%c,%c]\n", *(char *)list->head->dato->dato[0], *(char *)list->pos->dato->dato[0], *(char *)list->tail->dato->dato[0]);
 }
 
 void imprimirMenu()
