@@ -6,14 +6,15 @@
 List *list_new()
 {
     //creamos la estructura y pedimos memoria para la estructura
-    List *list = malloc(sizeof(list));
+    List *list = (List *)malloc(sizeof(list));
     if (list == NULL)
         return NULL;
     //seteamos la cabeza y la cola
     list->head = NULL;
-    list->tail = NULL;
-    list->tam = 0;
-    list->count = 0;
+    list->tail = (Nodo *)malloc(sizeof(Nodo));
+    ;
+    list->tam = 0; 
+    list->posMarker = 0;
     return list;
 }
 
@@ -21,17 +22,17 @@ List *list_new()
 //devuelve un bool si hubo un error o no
 bool list_append(List *list, void *elemento)
 {
-    Nodo *nuevo = malloc(sizeof(Nodo));
-    //printf("asignando %d - ",  *(int *)elemento);
-    nuevo->dato = *(int *)elemento;
-    nuevo->next = NULL;
-    nuevo->prev = NULL;
+    Nodo *nuevo = (Nodo *)malloc(sizeof(Nodo));
+    if (!nuevo)
+        return false;
+    nuevo->dato = *(size_t *)elemento;
     if (list->head == NULL)
     {
         list->head = nuevo;
-        list->head->next = list->head;
-        list->tail = list->head;
-        list->head->prev = list->tail;
+        list->tail = nuevo;
+        list->pos = nuevo;
+        nuevo->next = list->head;
+        nuevo->prev = list->tail;
         list->tam = 1;
         list->pos = nuevo;
     }
@@ -44,6 +45,7 @@ bool list_append(List *list, void *elemento)
         list->head->prev = list->tail;
         list->tam += 1;
     }
+    return true;
 }
 
 //devuelve el valor del elemento segun el indice
@@ -59,20 +61,26 @@ void *list_get(List *list, size_t indice)
     // }
     // return tmpList->dato;
 }
-
+//devuelve el valor del elemento segun el indice
+void list_edit_node(List *list, void *value)
+{
+    list->pos->dato = *(size_t *)value;
+}
 //recorre la lista de izquierda a derecha a travez de sus nodos
-void list_move_node(List *list, char move)
+void *list_move_node(List *list, char move)
 {
     switch (move)
     {
     case 'a':
-        list->count--;
-        if ((int)list->count< 0)list->count = list->tam-1;
+        list->posMarker--;
+        if (list->posMarker < 0)
+            list->posMarker = list->tam - 1;
         list->pos = list->pos->prev;
         break;
     case 'd':
-        list->count++;
-        if (list->count >= list->tam)list->count = 0;
+        list->posMarker++;
+        if (list->posMarker >= list->tam)
+            list->posMarker = 0;
         list->pos = list->pos->next;
         break;
     default:
