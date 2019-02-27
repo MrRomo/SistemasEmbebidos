@@ -8,13 +8,13 @@ void imprimirMenu();
 void printDesition();
 void space(char pos);
 
-int main(int argc, char const *argv[]) 
+int main(int argc, char const *argv[])
 {
     List *lista1 = list_new();
     int salir = 0;
     for (size_t i = 0; i < 10; i++)
     {
-        list_append(lista1,&i);
+        list_append(lista1, &i);
     }
     printList(lista1);
     while (1)
@@ -29,9 +29,9 @@ int main(int argc, char const *argv[])
 
 void desition(int salir, List *list)
 {
-    char move = 0;
-    // printDesition();
     size_t tmpNum;
+    char move = 0;
+
     switch (salir)
     {
     case 1:
@@ -45,23 +45,27 @@ void desition(int salir, List *list)
         printList(list);
         break;
     case 3:
-        printf("Saliendo de invitado list maker...");
+        printList(list);
+        printf("3 - Editar posicion [%d][%d]\nIngresa el nuevo valor del nodo: _", list->pos->dato, list->posMarker);
+        fflush(stdin);
+        scanf("%d", &tmpNum);
+        list_edit_node(list, &tmpNum);
+        printList(list);
         break;
     case 4:
-        do
+        while(move != 's')
         {
-            printList(list);
             printf("Hacia donde se desea mover a(derecha) o b(izquierda)\n");
-            fflush(stdin);
-            scanf("%s", &tmpNum);
-            list_move_node(list, tmpNum);
-        } while (tmpNum != 's');
+            scanf("%c", &move);
+            list_move_node(list, move);
+            printList(list);
+        }
 
         break;
     case 5:
-        printf("desea eliminar el nodo [%d,%d] - [Y/N]\n", (int)list->posMarker, (int)list->pos->dato);
         printList(list);
-        fflush(stdin); 
+        printf("desea eliminar el nodo [%d,%d] - [Y/N]\n", (int)list->posMarker, (int)list->pos->dato);
+        fflush(stdin);
         scanf("%s", &move);
         if (move == 'Y')
         {
@@ -104,7 +108,7 @@ void printDesition()
 }
 void space(char pos)
 {
-    for (char i = 0; i < pos+4; i++)
+    for (char i = 0; i < pos + 4; i++)
     {
         printf(" ");
     }
