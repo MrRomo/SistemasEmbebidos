@@ -40,15 +40,16 @@ void desition(int salir, List *list)
         break;
     case 2:
         printf("Ingrese el nuevo valor...");
-        scanf("%s",&data);
+        scanf("%s", &data);
         bool append = list_append(list, &data, &data);
         printList(list);
         break;
     case 3:
         printList(list);
-        printf("3 - Editar posicion [%d][%c]\nIngresa el nuevo valor del nodo: _", list->posMarker, *(char *)list->pos->dato->dato[0]);
+        printf("3 - Editar posicion [\"%c\":%d]\nIngresa el nuevo valor del nodo: _", *(char *)list->pos->dato->dato[0], *(char *)list->pos->dato->dato[1]);
         char letra;
-        letra = getchar();
+        fflush(stdin);
+        scanf("%s", &letra);
         list_edit_node(list, &letra, &letra);
         printList(list);
         break;
@@ -64,7 +65,7 @@ void desition(int salir, List *list)
         break;
     case 5:
         printList(list);
-        printf("desea eliminar el nodo [%d,%c] - [Y/N]\n", (int)list->posMarker, *(char *)list->pos->dato->dato[0]);
+        printf("Desea eliminar el nodo [\"%c\":%d] - [Y/N]\n", *(char *)list->pos->dato->dato[0], *(char *)list->pos->dato->dato[1]);
         fflush(stdin);
         scanf("%s", &move);
         if (move == 'y')
@@ -81,9 +82,9 @@ void desition(int salir, List *list)
         break;
     case 6:
         printList(list);
-        printf("ingrese el valor del nuevo nodo detras de [%d,%c] - [Y/N]\n", (int)list->posMarker, *(char *)list->pos->dato->dato[0]);
+        printf("ingrese el valor del nuevo nodo detras de [\"%c\":%d]\n", *(char *)list->pos->dato->dato[0], *(char *)list->pos->dato->dato[1]);
         fflush(stdin);
-        scanf("%d", &data);
+        scanf("%s", &data);
         list_insert(list, &data, &data);
         printList(list);
         printf("Nodo insertado...\n");
@@ -94,12 +95,12 @@ void desition(int salir, List *list)
 }
 void printList(List *list)
 {
-    system("@cls||clear");
+    // system("@cls||clear");
     list_run(list);
     space((int)list->posMarker * 3);
     printf("^\n");
     // space((int)list->posMarker * 3);
-    printf("[pos|dato][%d,%c]\n", (int)list->posMarker, *(char *)list->pos->dato->dato[0]);
+    printf("[pos|dato|dir][%d,%c,%d]\n", (int)list->posMarker, *(char *)list->pos->dato->dato[0], list->pos->dato->dato);
     printf("[h|p|t][%c,%c,%c]\n", *(char *)list->head->dato->dato[0], *(char *)list->pos->dato->dato[0], *(char *)list->tail->dato->dato[0]);
 }
 

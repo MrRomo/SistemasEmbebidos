@@ -4,21 +4,26 @@
 
 int main()
 {
-    vector_t* v1 = vector_new(4);
+    vector_t *v1 = vector_new(4);
     int dato1 = 7;
     float dato2 = 53.23;
     char dato3 = 'g';
     char dato4[] = "Nuevo vector";
 
-    vector_insert(v1,0,&dato1);
-    vector_insert(v1,1,&dato2);
-    vector_insert(v1,2,&dato3);
-    vector_insert(v1,3,dato4);
-    printf("Vector pos %d: %d\n", 0, *(int*)vector_get(v1,0));
-    printf("Vector pos %d: %f\n", 1, *(float *)vector_get(v1,1));
-    printf("Vector pos %d: %c\n", 2, *(char *)vector_get(v1,2));
-    printf("Vector pos %d: %s\n", 3, (char *)vector_get(v1,3));
-
+    vector_insert(v1, 0, &dato1);
+    vector_insert(v1, 1, &dato2);
+    vector_insert(v1, 2, &dato3);
+    vector_insert(v1, 3, dato4);
+    while (1)
+    {
+        fflush(stdin);
+        scanf("%d");
+        fflush(stdin);
+        printf("Vector pos %d: %d\n", 0, *(int *)vector_get(v1, 0));
+        printf("Vector pos %d: %f\n", 1, *(float *)vector_get(v1, 1));
+        printf("Vector pos %d: %c\n", 2, *(char *)vector_get(v1, 2));
+        printf("Vector pos %d: %s\n", 3, (char *)vector_get(v1, 3));
+    }
 }
 
 //  char letra = 'd';

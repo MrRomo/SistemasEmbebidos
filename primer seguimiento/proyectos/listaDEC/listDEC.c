@@ -20,19 +20,22 @@ List *list_new()
 
 //inserta un elemento en la posicion especifica
 //devuelve un bool si hubo un error o no
-bool list_append(List *list, void *key, void *value)
+bool list_append(List *list, void *keyt, void *valuet)
 {
+    void *key = keyt;
+    void *value = valuet;
     Nodo *nuevo = (Nodo *)malloc(sizeof(Nodo));
     if (!nuevo)
         return false;
     nuevo->dato = vector_new(2);
-    if (nuevo->dato == NULL)
+    if (!nuevo->dato)
     {
         free(nuevo);
         return false;
     }
-    vector_insert(nuevo->dato,0,key);
-    vector_insert(nuevo->dato,1,value);
+
+    vector_insert(nuevo->dato, 0, key);
+    vector_insert(nuevo->dato, 1, value);
     if (list->head == NULL)
     {
         list->head = nuevo;
@@ -58,9 +61,9 @@ bool list_append(List *list, void *key, void *value)
 //inserta un dato detras del nodo que apunta pos
 bool list_insert(List *list, void *keyt, void *valuet)
 {
- 
-    void* key = keyt;
-    void* value = valuet;
+
+    void *key = keyt;
+    void *value = valuet;
 
     Nodo *nuevo = (Nodo *)malloc(sizeof(Nodo));
     if (!nuevo)
@@ -112,10 +115,15 @@ void *list_get(List *list, size_t indice)
     // return tmpList->dato;
 }
 //devuelve el valor del elemento segun el indice
-void list_edit_node(List *list, void *key,void *value)
+void list_edit_node(List *list, void *key, void *value)
 {
-    vector_insert( list->pos->dato, 0, key);
-    vector_insert( list->pos->dato, 1, value);
+    // Vector_d * nuevo = vector_new(2);
+    // nuevo->dato[0] = key;
+    // nuevo->dato[1] = value;
+    // vector_destroy(list->pos->dato); 
+    // list->pos->dato = nuevo;
+    vector_insert(list->pos->dato, 0, key);
+    vector_insert(list->pos->dato, 1, value);
 }
 //recorre la lista de izquierda a derecha a travez de sus nodos
 void *list_move_node(List *list, char move)
@@ -146,7 +154,7 @@ void list_run(List *list)
     nodo = list->head;
     for (int i = 0; i < (int)list->tam; i++)
     {
-        printf(" <-[\"%c\":%d]-> ", *(char*)nodo->dato->dato[0],*(char *)nodo->dato->dato[1]);
+        printf("<-[\"%c\":%d]-> ", *(char *)nodo->dato->dato[0], *(char *)nodo->dato->dato[1]);
         nodo = nodo->next;
     }
     printf("\n");
@@ -198,6 +206,7 @@ void list_destroy(List *list)
     for (size_t i = 0; i < list->tam - 1; i++)
     {
         nextNode = tmpNode->next;
+        vector_destroy(tmpNode->dato);
         free(tmpNode);
         tmpNode = nextNode;
     }
