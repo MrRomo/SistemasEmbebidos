@@ -14,9 +14,10 @@ typedef struct pack
 int main()
 {
     pack dato;
+    pack * dato_res;
     char chat[50];
     dato.id = 00001;
-    dato.temp = 30.5;
+    dato.temp = 39.5;
 
     int sock;
 
@@ -38,6 +39,11 @@ int main()
         fflush(stdin);
 
         send(sock, (const void *)&dato, sizeof(dato), 0);
+        // while (recv(sock, res_buff, sizeof(res_buff), 0) > 0)
+        // {
+        //     printf("response: %s", res_buff);
+        // }
+
         // recv(sock, res_buff, sizeof(res_buff), 0);
         // close(sock);
     }

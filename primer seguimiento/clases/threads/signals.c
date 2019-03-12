@@ -1,8 +1,18 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <sys/signal.h>
+#include <fcntl.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <string.h>
+#include <pthread.h>
+
+//manejador de la señal
+void handler_signal(int sig)
+{
+    printf("procesando la señal %d\n", sig);
+}
+
 typedef struct pack
 {
     int id;
@@ -32,13 +42,12 @@ int main()
         printf("LISTEN ERROR");
     sock_res = accept(sock_req, &client, &c);
 
-    while (recv(sock_res, buffer, sizeof(buffer), 0) > 0)
-    {
-        dato = (pack*) buffer;
-        printf("temperatura actual: \nid: %d\ntemp: %f °C\n", dato->id, dato->temp);
-        fflush(stdout);
-        memset(buffer, 0, sizeof(buffer));
-    }
-        send(sock_res, (const void*)&dato, sizeof(dato), 0);
+    struct sigaction signal;
+    signal.sa_handler = handler_signal;
+    sigaction(SIGIO, &signal, 0);
+
+    fcntl(sock_res, F_SETFL, O_ASYNC);
+    fcntl(sock_res, __F_SETOWN, getpid());
+
     return EXIT_SUCCESS;
 }

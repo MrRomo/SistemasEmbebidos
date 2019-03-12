@@ -6,7 +6,9 @@
         "cstdbool": "cpp",
         "dinamicvector.h": "c",
         "stdbool.h": "c",
-        "listdec.h": "c"
+        "listdec.h": "c",
+        "signal.h": "c",
+        "fcntl.h": "c"
     },
     "C_Cpp.errorSquiggles": "Enabled"
 }

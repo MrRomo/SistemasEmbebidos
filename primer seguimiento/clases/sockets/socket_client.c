@@ -13,6 +13,8 @@ typedef struct pack
 int main()
 {
     pack dato;
+    pack *datores;
+
 
     dato.id = 12432543;
     dato.temp = 30.5;
@@ -36,7 +38,15 @@ int main()
     }
     printf("Conexion establecida\n");
     send(sock, (const void*)&dato, sizeof(dato), 0);
-    recv(sock, res_buff, sizeof(res_buff), 0);
+
+    while (recv(sock, res_buff, sizeof(res_buff), 0) > 0)
+    {
+        datores = (pack*) res_buff;
+        printf("temperatura actual: \nid: %d\ntemp: %f °C", datores->id, datores->temp);
+        fflush(stdout);
+        memset(res_buff, 0, sizeof(res_buff));
+    }
+
     printf("%s", res_buff);
     pause(5);
     close(sock);
