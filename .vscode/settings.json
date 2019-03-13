@@ -8,7 +8,9 @@
         "stdbool.h": "c",
         "listdec.h": "c",
         "signal.h": "c",
-        "fcntl.h": "c"
+        "fcntl.h": "c",
+        "inet.h": "c",
+        "unistd.h": "c"
     },
     "C_Cpp.errorSquiggles": "Enabled"
 }

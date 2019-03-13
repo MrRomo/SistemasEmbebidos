@@ -1,8 +1,8 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <sys/socket.h>
 #include <netinet/in.h>
+#include <sys/socket.h>
 #include <signal.h>
 #include <fcntl.h>
 
@@ -42,7 +42,7 @@ int main(){
 
     printf("conexion exitosa"); 
 	fcntl(client_sock, F_SETFL, O_ASYNC);
-	fcntl(client_sock, F_SETOWN, getpid());
+	fcntl(client_sock, __F_SETOWN, getpid());
 
 	/*while(recv(client_sock, buffer, sizeof(buffer), 0) > 0){
 		printf("%s\n", buffer);
