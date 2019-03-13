@@ -38,9 +38,9 @@ int main(int argc, char *argv[])
     /* Mark the socket so it will listen for incoming connections */
     if (listen(servSock, MAXPENDING) < 0)
         DieWithError("listen() failed");
+    /* Set the size of the in-out parameter */
     while (1) /* Run forever */
     {
-        /* Set the size of the in-out parameter */
         clntLen = sizeof(echoClntAddr);
 
         /* Wait for a client to connect */
