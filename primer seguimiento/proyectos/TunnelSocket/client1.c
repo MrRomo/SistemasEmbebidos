@@ -3,11 +3,10 @@
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <string.h>
-#include <signal.h>
-#include <fcntl.h>
+
 #include "client_handler.c"
 
-#define RCVBUFSIZE 32                  /* Size of receive buffer */
+#define RCVBUFSIZE 32 /* Size of receive buffer */
 
 void DieWithError(char *errorMessage); /* Error handling function */
 void socketCreator(int port, int client);
@@ -18,6 +17,18 @@ int sock;
 int main()
 {
     //Create socket client
-    socketCreator(3000, 0);
-
+    int select;
+    while (select != 1 && select != 2)
+    {
+        printf("A que puerto quiere conectar:\n [1] 3000 -  [2] 3001:\n");
+        scanf("%d", &select);
+    }
+    if (select == 1)
+    {
+        socketCreator(3000, 0);
+    }
+    else
+    {
+        socketCreator(3001, 1);
+    }
 }

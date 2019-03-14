@@ -36,10 +36,18 @@ int main()
 void *task1()
 {
     printf("Task 0 started\n");
-    createSocket(3000, 0);
+    while (1)
+    {
+        createSocket(3000, 0);
+        printf("Closing conection\n");
+    }
 }
 void *task2()
 {
     printf("Task 1 started\n");
-    createSocket(3001, 1);
+    while (1)
+    {
+        createSocket(3001, 1);
+        printf("Closing conection\n");
+    }
 }
