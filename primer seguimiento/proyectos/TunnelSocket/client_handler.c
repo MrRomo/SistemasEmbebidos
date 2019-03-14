@@ -18,9 +18,10 @@ typedef struct message
 
 void DieWithError(char *errorMessage); /* Error handling function */
 void handler_signal(int sig);
+message data;
 
 int sock; /*Socket descriptor */
-
+char prevMsg[50];
 void socketCreator(int port, int client)
 {
     struct sockaddr_in echoServAddr; /* Echo server address */
@@ -46,12 +47,13 @@ void socketCreator(int port, int client)
         DieWithError(" connect () failed");
     fcntl(sock, F_SETFL, O_ASYNC);
     fcntl(sock, __F_SETOWN, getpid());
+    printf("Ingrese su mensaje:\r\n");
 
     while (1)
     {
-        printf("Ingrese su mensaje:\r\n");
+            
         fflush(stdin);
-        fgets(dato.chat,100, stdin);
+        fgets(dato.chat, 100, stdin);
         fflush(stdin);
         dato.temp = 26 + rand() / (float)RAND_MAX * (9);
         send(sock, (const void *)&dato, sizeof(dato), 0);
@@ -61,7 +63,6 @@ void socketCreator(int port, int client)
 void handler_signal(int sig)
 {
     char buffer[500];
-    message data;
     int recvMsgSize; /* Size of received message */
     memset(buffer, 0, sizeof(buffer));
     if ((recvMsgSize = recv(sock, buffer, sizeof(buffer), 0)) < 0)
@@ -69,7 +70,13 @@ void handler_signal(int sig)
     data = *(message *)buffer;
     if (strlen(data.chat) > 0)
     {
-        printf("\t\tid: %d\n\t\ttemp: %f °C\n\t\tmessage: \"%s\"\n", data.id, data.temp, data.chat);
+         
+        if (strcmp(prevMsg, data.chat))
+        {
+            printf("\t-----------\n\t\tid: %d\n\t\ttemp: %f °C\n\t\tmessage: %s\n\t-----------\n", data.id, data.temp, data.chat);
+            memcpy(prevMsg,data.chat,strlen(data.chat)+1);
+            printf("Ingrese su mensaje:\r\n");
+        }
         return;
     }
     memset(buffer, 0, sizeof(buffer));

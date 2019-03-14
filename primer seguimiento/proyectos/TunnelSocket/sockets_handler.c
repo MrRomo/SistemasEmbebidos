@@ -20,6 +20,7 @@ struct sockaddr_in echoServAddr[2]; /*Local address */
 struct sockaddr_in echoClntAddr[2]; /*Client address */
 unsigned short echoServPort[2];     /*Server port */
 unsigned int clntLen[2];            /*Length of client address data structure */
+char prevMsg[50];
 
 void handler_signal1(int sig);
 void handler_signal2(int sig);
@@ -38,7 +39,7 @@ int createSocket(int port, int sock)
     if (bind(servSock[sock], (struct sockaddr *)&echoServAddr[sock], sizeof(echoServAddr[sock])) < 0)
         DieWithError("BIND ERROR");
 
-    if (listen(servSock[sock], 3) < 0)
+    if (listen(servSock[sock], 1) < 0)
         DieWithError("LISTEN ERROR");
     printf("Socket [%d] on port : %d\n", sock, port);
 
@@ -50,28 +51,28 @@ int createSocket(int port, int sock)
 
         if ((clntSock[sock] = accept(servSock[sock], (struct sockaddr *)&echoClntAddr[sock], &c)) < 0)
             DieWithError("accept() failed");
-        printf("accept client\n");
         /* Receive message from client */
-        printf("\n*cliente conectado*\n");
+        printf("*cliente [%d] conectado*\n", sock);
         do
         {
-            /* code */
-
             while (1)
             {
                 if ((recvMsgSize = recv(clntSock[sock], buffer, sizeof(buffer), 0)) < 0)
                     DieWithError("recv() failed");
                 client_data[sock] = *(message *)buffer;
-                printf("Size of message: %d - %d\n", strlen(client_data[sock].chat), recvMsgSize);
+                char blakc[] = "\n";
                 if (strlen(client_data[sock].chat) > 0)
                 {
-                    printf("id: %d\ntemp: %f °C\nmessage: \"%s\"\n----\n", client_data[sock].id, client_data[sock].temp, client_data[sock].chat);
-                    send(clntSock[!sock], (const void *)&client_data[sock], sizeof(client_data[sock]), 0);
-                    break;
+                    if (strcmp(client_data[sock].chat, blakc)==0)
+                    {
+                    }
+                    else
+                    {
+                        send(clntSock[!sock], (const void *)&client_data[sock], sizeof(client_data[sock]), 0);
+                        memset(buffer, 0, sizeof(buffer));
+                    }
                 }
-                memset(buffer, 0, sizeof(buffer));
             }
         } while (recvMsgSize > 0);
-        printf("Closing conection");
     }
 }
