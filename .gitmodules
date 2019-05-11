@@ -1,0 +1,3 @@
+[submodule "SensorIoT"]
+	path = SensorIoT
+	url = git@github.com:MrRomo/SensorIoT.git

@@ -38,6 +38,7 @@ int main()
         printf("temperatura actual: \nid: %d\ntemp: %f °C\n", dato->id, dato->temp);
         fflush(stdout);
         memset(buffer, 0, sizeof(buffer));
+        printf("sending response");
     }
         send(sock_res, (const void*)&dato, sizeof(dato), 0);
     return EXIT_SUCCESS;
