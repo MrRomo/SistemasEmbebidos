@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "dinamicVector.c"
+#include "dinamicVector.h"
 
 int main()
 {
